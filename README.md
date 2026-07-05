@@ -1,49 +1,110 @@
-# EncodeHub 2.0
+# NoClipCode
 
-EncodeHub 2.0 é uma ferramenta online completa para conversão, formatação e manipulação de dados, criada para desenvolvedores e usuários técnicos que precisam de eficiência em suas tarefas do dia a dia.
+> Você atravessou a parede.
+
+**NoClipCode** é uma caixa de ferramentas online para desenvolvedores — um hub com dezenas de utilitários para converter, formatar, testar e gerar dados diretamente no navegador. Rápido, seguro e sem instalação: seus dados nunca saem do seu dispositivo.
+
+Anteriormente conhecido como **EncodeHub**, o projeto passou por um rebranding completo para **NoClipCode**, ganhando uma nova identidade visual com temática _noclip_ (terminal/retro) e uma coleção muito maior de ferramentas.
 
 ## Funcionalidades
 
-### Conversores
+O NoClipCode reúne **29 ferramentas** organizadas por categoria.
 
-- **Conversor JSON, XML e YAML**
-  - Converta dados entre JSON, XML e YAML de maneira rápida e simples.
+### Conversão
 
-- **Conversor Base64**
-  - Converta texto para Base64 e Base64 para texto.
+- **Base64** — Codifique e decodifique texto em Base64 de forma rápida e segura.
+- **Binário** — Converta texto para binário e binário para texto.
+- **Bases Numéricas** — Converta entre decimal, hexadecimal, octal e binário ao mesmo tempo.
+- **JSON / XML / YAML** — Converta dados entre JSON, XML e YAML instantaneamente.
+- **JSON ⇄ CSV** — Converta entre arrays de objetos JSON e planilhas CSV nos dois sentidos.
+- **URL Encode / Decode** — Codifique e decodifique strings para uso seguro em URLs.
+- **Unidades de Medida** — Converta entre diferentes unidades de medida e moedas.
+- **Unix Timestamp** — Converta timestamps Unix (segundos ou ms) em datas legíveis e vice-versa.
 
-- **Conversor Binário**
-  - Traduza texto para binário e binário para texto.
+### Texto
 
-- **Conversor de Unidades de Medida**
-  - Converta valores entre diferentes unidades de medida, como metros, quilômetros, milhas e mais.
+- **Conversor de Case** — Converta entre camelCase, snake_case, kebab-case e mais.
+- **Analisador de Texto** — Conte caracteres, palavras, linhas, bytes e revele caracteres invisíveis.
+- **Diff de Texto** — Compare dois textos e veja as diferenças linha a linha.
+- **Extrator de Dados** — Extraia e-mails, URLs, IPs, CPFs, telefones e datas de um texto.
+- **Markdown Editor** — Escreva Markdown com pré-visualização renderizada ao vivo.
 
-- **Conversor Monetário**
-  - Realize conversões entre moedas diferentes.
+### Dev
 
-### Geradores e Calculadoras
+- **Formatador de Código** — Formate ou minifique JSON, CSS e HTML com um clique.
+- **Formatador de SQL** — Embeleze queries SQL com indentação e palavras-chave padronizadas.
+- **Regex Tester** — Teste expressões regulares com destaque de correspondências em tempo real.
+- **cURL para Código** — Converta comandos cURL em fetch, Axios ou Python Requests.
+- **Tradutor de Cron** — Entenda e gere expressões Cron explicadas em português.
+- **Gerador** — Gere UUIDs, senhas seguras e cores aleatórias instantaneamente.
+- **Gerador de Mock Data** — Defina campos e gere dados falsos em JSON ou CSV para testes.
 
-- **Gerador de Hash**
-  - Gera hashes criptográficos para strings utilizando algoritmos como SHA-1, SHA-256 e outros.
+### Frontend
 
-### Manipulação de Tempo
+- **Entidades HTML** — Converta caracteres especiais em entidades HTML e vice-versa.
+- **PX ⇄ REM / EM** — Converta px para rem/em com base no font-size definido.
+- **Conversor de Cor** — Converta entre HEX, RGB, HSL e CMYK com pré-visualização.
 
-- **Calculadora de Horas de trabalho**
-  - Descubra a data final de um projeto utilizando a data inical e a quantidade de horas.
+### Rede
 
-- **Calculadora de Carga Horaria**
-  - Calcula a carga horaria do dia.
+- **Calculadora chmod** — Calcule permissões de arquivos Linux em octal e simbólico.
+- **Calculadora CIDR** — Calcule range de IPs, máscara e hosts a partir de notação CIDR.
+- **HTTP Status Codes** — Referência rápida e pesquisável de códigos de status HTTP.
+- **Parser de URL** — Quebre uma URL em protocolo, host, path e parâmetros de query.
+
+### Criptografia
+
+- **Hash Generator** — Gere hashes criptográficos SHA-1, SHA-256, SHA-512 e MD5.
+- **JWT Decoder** — Decodifique tokens JWT e veja header, payload e validade.
+
+### Utilitário
+
+- **Calculadora de Tempo** — Calcule horas de trabalho, datas e carga horária.
+
+## Command Palette
+
+Pressione `Ctrl/Cmd + K` em qualquer página para abrir a paleta de comandos e navegar rapidamente entre todas as ferramentas.
+
+## Stack
+
+- **[Next.js 15](https://nextjs.org/)** (App Router) com **React 19**
+- **[TypeScript](https://www.typescriptlang.org/)**
+- **[Tailwind CSS](https://tailwindcss.com/)**
+- **[lucide-react](https://lucide.dev/)** para ícones
+- Bibliotecas de apoio: `sql-formatter`, `cronstrue`, `class-variance-authority`, `tailwind-merge`
+
+## Como Executar Localmente
+
+```bash
+# Instale as dependências
+npm install
+
+# Rode o servidor de desenvolvimento
+npm run dev
+```
+
+Acesse [http://localhost:3000](http://localhost:3000) no navegador.
+
+Scripts disponíveis:
+
+- `npm run dev` — inicia o servidor de desenvolvimento (com Turbopack).
+- `npm run build` — gera a build de produção.
+- `npm run start` — inicia o servidor de produção.
+- `npm run lint` — executa o linter.
 
 ## Estrutura do Repositório
 
-A organização do projeto é baseada em diretórios dedicados a cada funcionalidade:
+```
+app/            # Rotas do App Router — uma pasta por ferramenta (base64, jwt, cidr, ...)
+  layout.tsx    # Layout raiz, fontes e metadados
+  page.tsx      # Página inicial com a grade de ferramentas
+  globals.css   # Estilos globais e tema
+components/      # Componentes compartilhados (header, command-palette, share-button, ui/)
+hooks/          # Hooks React reutilizáveis (use-url-state)
+lib/            # Utilitários e registro de ferramentas (tools.ts, utils.ts)
+```
 
-- `base64/` - Código relacionado ao conversor Base64.
-- `binario/` - Código relacionado ao conversor Binário.
-- `converter/` - Ferramentas para conversão entre JSON, XML e YAML.
-- `hash/` - Geradores de hash.
-- `time/` - Funcionalidades relacionadas a tempo e datas.
-- `unidades/` - Conversores de unidades de medida.
+O registro central das ferramentas fica em [`lib/tools.ts`](lib/tools.ts) — adicionar uma entrada lá já a inclui automaticamente na home, na paleta de comandos e na navegação.
 
 ## Como Contribuir
 
@@ -58,4 +119,4 @@ Este projeto está licenciado sob a [MIT License](LICENSE).
 
 ---
 
-EncodeHub 2.0: **Seu hub de soluções para manipulação de dados!**
+NoClipCode: **Atravesse as paredes da realidade e manipule seus dados no vazio entre os builds.**

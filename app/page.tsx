@@ -121,7 +121,7 @@ export default function HomePage() {
             <p>
               <span className="text-primary">[EXIT]</span> NoClipCode // feito no vazio para a comunidade de desenvolvedores.{" "}
               <a
-                href="https://github.com/Miguelito001/EncodeHub2.0"
+                href="https://github.com/Miguelito001/NoClipCode"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"
