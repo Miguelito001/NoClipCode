@@ -123,7 +123,7 @@ export function Header() {
         </button>
 
         <a
-          href="https://github.com/Miguelito001/EncodeHub2.0"
+          href="https://github.com/Miguelito001/NoClipCode"
           target="_blank"
           rel="noopener noreferrer"
           className="hidden sm:flex items-center justify-center h-9 w-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
