@@ -34,15 +34,19 @@ export default function HomePage() {
         {/* Hero Section */}
         <section className="py-20 px-4">
           <div className="container max-w-screen-xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm mb-6 border border-primary/20">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-primary/10 text-primary text-sm mb-6 border border-primary/30 font-mono">
               <Zap className="h-4 w-4" />
-              <span>{tools.length} ferramentas para desenvolvedores</span>
+              <span>{tools.length} ferramentas encontradas no nível</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 text-balance">
-              EncodeHub
+            <p className="font-mono text-sm text-muted-foreground mb-2">
+              <span className="text-primary">visitante@noclipcode</span>:~$ ./noclip --enter
+            </p>
+            <h1 className="font-display text-6xl md:text-8xl leading-none text-foreground mb-6 text-balance noclip-glow">
+              NoClipCode
+              <span className="noclip-cursor align-middle" aria-hidden="true" />
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 text-pretty">
-              Caixa de ferramentas online para desenvolvedores. Converta, formate, teste e gere dados sem sair do navegador — rápido, seguro e sem instalação.
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 text-pretty leading-relaxed">
+              Você atravessou a parede. Uma caixa de ferramentas para desenvolvedores no vazio entre os builds — converta, formate, teste e gere dados sem sair do navegador. Rápido, seguro e estranhamente familiar.
             </p>
 
             <div className="mb-12 flex justify-center">
@@ -72,11 +76,11 @@ export default function HomePage() {
         <section className="py-12 px-4 bg-secondary/30">
           <div className="container max-w-screen-xl mx-auto">
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-semibold text-foreground">
-                Ferramentas Disponíveis
+              <h2 className="font-display text-4xl text-foreground">
+                <span className="text-primary">&gt;</span> Ferramentas Disponíveis
               </h2>
-              <span className="text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-full border border-border">
-                {tools.length} ferramentas
+              <span className="text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-sm border border-border font-mono">
+                {tools.length} salas
               </span>
             </div>
 
@@ -113,9 +117,9 @@ export default function HomePage() {
 
         {/* Footer */}
         <footer className="py-8 px-4 border-t border-border">
-          <div className="container max-w-screen-xl mx-auto text-center text-sm text-muted-foreground">
+          <div className="container max-w-screen-xl mx-auto text-center text-sm text-muted-foreground font-mono">
             <p>
-              Feito com dedicação para a comunidade de desenvolvedores.{" "}
+              <span className="text-primary">[EXIT]</span> NoClipCode // feito no vazio para a comunidade de desenvolvedores.{" "}
               <a
                 href="https://github.com/Miguelito001/EncodeHub2.0"
                 target="_blank"

@@ -1,23 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Mono, VT323 } from "next/font/google";
 import "./globals.css";
 import { CommandPalette } from "@/components/command-palette";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",
+  weight: ["400", "700"],
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const vt323 = VT323({
+  variable: "--font-vt323",
+  weight: "400",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "EncodeHub - Ferramentas para Desenvolvedores",
+  title: "NoClipCode // Ferramentas para Desenvolvedores",
   description:
-    "EncodeHub é uma ferramenta online completa para conversão, formatação e manipulação de dados. Converta Base64, Binário, JSON, XML, YAML, gere hashes e muito mais.",
+    "NoClipCode é uma caixa de ferramentas online para desenvolvedores. Atravesse as paredes da realidade: converta Base64, Binário, JSON, XML, YAML, gere hashes e muito mais — tudo no navegador.",
   keywords: [
+    "noclipcode",
     "conversor",
     "base64",
     "binário",
@@ -30,7 +33,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#009578",
+  themeColor: "#0a0906",
   width: "device-width",
   initialScale: 1,
 };
@@ -43,7 +46,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="bg-background">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans min-h-screen`}
+        className={`${spaceMono.variable} ${vt323.variable} font-sans min-h-screen`}
       >
         {children}
         <CommandPalette />
