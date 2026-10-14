@@ -28,6 +28,12 @@ import {
   Link2,
   ScanText,
   FileText,
+  ImageDown,
+  Files,
+  FileStack,
+  QrCode,
+  ListFilter,
+  FileJson2,
 } from "lucide-react";
 
 export type ToolCategory =
@@ -37,6 +43,7 @@ export type ToolCategory =
   | "Rede"
   | "Frontend"
   | "Texto"
+  | "Arquivos"
   | "Utilitário";
 
 export interface Tool {
@@ -53,6 +60,66 @@ export interface Tool {
 }
 
 export const tools: Tool[] = [
+  {
+    href: "/json-types",
+    title: "JSON para TypeScript",
+    label: "JSON → TypeScript",
+    description: "Gere interfaces TypeScript a partir de qualquer JSON",
+    icon: FileJson2,
+    color: "text-blue-400",
+    category: "Dev",
+    keywords: ["types", "interface", "model", "api", "schema", "json to typescript"],
+  },
+  {
+    href: "/listas",
+    title: "Limpar e Ordenar Listas",
+    label: "Listas",
+    description: "Ordene linhas, remova duplicadas, espaços e linhas vazias",
+    icon: ListFilter,
+    color: "text-teal-400",
+    category: "Texto",
+    keywords: ["sort", "unique", "deduplicate", "linhas", "planilha", "limpar"],
+  },
+  {
+    href: "/qr-code",
+    title: "Gerar e Ler QR Code",
+    label: "QR Code",
+    description: "Crie QR Codes ou leia o conteúdo de uma imagem localmente",
+    icon: QrCode,
+    color: "text-emerald-400",
+    category: "Arquivos",
+    keywords: ["qrcode", "barcode", "código", "scan", "wifi", "url"],
+  },
+  {
+    href: "/imagem",
+    title: "Converter e Comprimir Imagem",
+    label: "Imagem",
+    description: "Converta, comprima e redimensione PNG, JPEG e WebP localmente",
+    icon: ImageDown,
+    color: "text-fuchsia-400",
+    category: "Arquivos",
+    keywords: ["image", "foto", "resize", "compress", "webp", "jpeg", "png", "metadata", "exif"],
+  },
+  {
+    href: "/pdf-juntar",
+    title: "Juntar PDFs",
+    label: "Juntar PDF",
+    description: "Combine vários PDFs na ordem desejada sem fazer upload",
+    icon: Files,
+    color: "text-red-400",
+    category: "Arquivos",
+    keywords: ["pdf", "merge", "combinar", "unir", "arquivo"],
+  },
+  {
+    href: "/pdf-paginas",
+    title: "Extrair e Girar PDF",
+    label: "Páginas PDF",
+    description: "Extraia, remova e gire páginas de um PDF no navegador",
+    icon: FileStack,
+    color: "text-orange-400",
+    category: "Arquivos",
+    keywords: ["pdf", "split", "separar", "extrair", "rotacionar", "remover páginas"],
+  },
   {
     href: "/base64",
     title: "Base64",
@@ -356,6 +423,7 @@ export const tools: Tool[] = [
 ];
 
 export const categoryOrder: ToolCategory[] = [
+  "Arquivos",
   "Conversão",
   "Texto",
   "Dev",

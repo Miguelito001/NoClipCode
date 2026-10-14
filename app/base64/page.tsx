@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ShareButton } from "@/components/share-button";
 import { useUrlState } from "@/hooks/use-url-state";
 import { ArrowRight, ArrowLeft, Copy, Trash2, Check } from "lucide-react";
+import { Base64FileCard } from "@/components/base64-file-card";
 
 export default function Base64Page() {
   const [input, setInput] = useUrlState("q", "");
@@ -124,6 +125,7 @@ export default function Base64Page() {
               Decodificar de Base64
             </Button>
           </div>
+          <Base64FileCard />
         </div>
       </main>
     </div>

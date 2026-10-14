@@ -23,7 +23,7 @@ function minifyJSON(code: string): string {
 }
 
 function formatCSS(code: string): string {
-  let result = code
+  const result = code
     .replace(/\s*{\s*/g, " {\n  ")
     .replace(/;\s*/g, ";\n  ")
     .replace(/\s*}\s*/g, "\n}\n")

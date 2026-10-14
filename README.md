@@ -8,7 +8,16 @@ Anteriormente conhecido como **EncodeHub**, o projeto passou por um rebranding c
 
 ## Funcionalidades
 
-O NoClipCode reúne **29 ferramentas** organizadas por categoria.
+O NoClipCode reúne **36 ferramentas** organizadas por categoria.
+
+### Arquivos
+
+- **Gerar e Ler QR Code** — Gere QR Codes e leia códigos a partir de imagens, sem upload.
+- **Converter e Comprimir Imagem** — Converta PNG, JPEG e WebP, redimensione, comprima e remova metadados.
+- **Juntar PDFs** — Combine até 20 PDFs, reordene e baixe um único arquivo.
+- **Extrair e Girar PDF** — Selecione intervalos, remova páginas e aplique rotação.
+
+As ferramentas de arquivo processam tudo em memória no navegador. Os arquivos não são enviados ao servidor.
 
 ### Conversão
 
@@ -28,6 +37,7 @@ O NoClipCode reúne **29 ferramentas** organizadas por categoria.
 - **Diff de Texto** — Compare dois textos e veja as diferenças linha a linha.
 - **Extrator de Dados** — Extraia e-mails, URLs, IPs, CPFs, telefones e datas de um texto.
 - **Markdown Editor** — Escreva Markdown com pré-visualização renderizada ao vivo.
+- **Limpar e Ordenar Listas** — Ordene linhas, remova duplicadas, espaços e linhas vazias.
 
 ### Dev
 
@@ -38,6 +48,7 @@ O NoClipCode reúne **29 ferramentas** organizadas por categoria.
 - **Tradutor de Cron** — Entenda e gere expressões Cron explicadas em português.
 - **Gerador** — Gere UUIDs, senhas seguras e cores aleatórias instantaneamente.
 - **Gerador de Mock Data** — Defina campos e gere dados falsos em JSON ou CSV para testes.
+- **JSON para TypeScript** — Gere interfaces TypeScript a partir de respostas JSON.
 
 ### Frontend
 
@@ -91,6 +102,9 @@ Scripts disponíveis:
 - `npm run build` — gera a build de produção.
 - `npm run start` — inicia o servidor de produção.
 - `npm run lint` — executa o linter.
+- `npm run typecheck` — valida os tipos TypeScript.
+- `npm test` — executa os testes unitários.
+- `npm run check` — executa lint, typecheck, testes e build.
 
 ## Estrutura do Repositório
 
@@ -99,7 +113,7 @@ app/            # Rotas do App Router — uma pasta por ferramenta (base64, jwt,
   layout.tsx    # Layout raiz, fontes e metadados
   page.tsx      # Página inicial com a grade de ferramentas
   globals.css   # Estilos globais e tema
-components/      # Componentes compartilhados (header, command-palette, share-button, ui/)
+components/      # Componentes compartilhados (layout de ferramenta, upload, header, paleta, ui/)
 hooks/          # Hooks React reutilizáveis (use-url-state)
 lib/            # Utilitários e registro de ferramentas (tools.ts, utils.ts)
 ```

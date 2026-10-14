@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ShareButton } from "@/components/share-button";
 import { useUrlState } from "@/hooks/use-url-state";
 import { Copy, Check, Hash } from "lucide-react";
+import { FileHashCard } from "@/components/file-hash-card";
 
 type HashResult = {
   algorithm: string;
@@ -26,7 +27,8 @@ export default function HashPage() {
     const data = encoder.encode(input);
 
     const algorithms = ["SHA-1", "SHA-256", "SHA-384", "SHA-512"];
-    const results: HashResult[] = [];
+    const { md5 } = await import("hash-wasm");
+    const results: HashResult[] = [{ algorithm: "MD5", hash: await md5(input) }];
 
     for (const algorithm of algorithms) {
       const hashBuffer = await crypto.subtle.digest(algorithm, data);
@@ -123,6 +125,7 @@ export default function HashPage() {
               </CardContent>
             </Card>
           </div>
+          <FileHashCard />
         </div>
       </main>
     </div>

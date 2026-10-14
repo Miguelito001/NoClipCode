@@ -149,7 +149,6 @@ export default function MockDataPage() {
       return row;
     });
     return format === "json" ? JSON.stringify(rows, null, 2) : toCsv(rows);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fields, count, format, seed]);
 
   const copy = async () => {
