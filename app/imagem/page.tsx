@@ -7,15 +7,14 @@ import { FileDropzone } from "@/components/file-dropzone";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { downloadBlob, formatBytes, MAX_LOCAL_FILE_SIZE, replaceExtension } from "@/lib/files";
-
-type OutputFormat = "image/jpeg" | "image/png" | "image/webp";
+import { transformImage, type OutputImageType } from "@/lib/batch-images";
 
 export default function ImageToolPage() {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
   const [result, setResult] = useState<Blob | null>(null);
   const [resultUrl, setResultUrl] = useState("");
-  const [format, setFormat] = useState<OutputFormat>("image/webp");
+  const [format, setFormat] = useState<OutputImageType>("image/webp");
   const [quality, setQuality] = useState(82);
   const [width, setWidth] = useState("");
   const [height, setHeight] = useState("");
@@ -66,22 +65,12 @@ export default function ImageToolPage() {
     setBusy(true);
     setError("");
     try {
-      const bitmap = await createImageBitmap(file);
-      const canvas = document.createElement("canvas");
-      canvas.width = outputWidth;
-      canvas.height = outputHeight;
-      const context = canvas.getContext("2d", { alpha: format !== "image/jpeg" });
-      if (!context) throw new Error("Seu navegador não oferece Canvas 2D.");
-      if (format === "image/jpeg") {
-        context.fillStyle = "#ffffff";
-        context.fillRect(0, 0, outputWidth, outputHeight);
-      }
-      context.imageSmoothingEnabled = true;
-      context.imageSmoothingQuality = "high";
-      context.drawImage(bitmap, 0, 0, outputWidth, outputHeight);
-      bitmap.close();
-      const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, format, quality / 100));
-      if (!blob) throw new Error("Este formato não é suportado pelo navegador.");
+      const { blob } = await transformImage(file, format, quality, {
+        mode: "fixed",
+        width: outputWidth,
+        height: outputHeight,
+        preserveAspectRatio: false,
+      });
       if (resultUrl) URL.revokeObjectURL(resultUrl);
       setResult(blob);
       setResultUrl(URL.createObjectURL(blob));
@@ -120,7 +109,7 @@ export default function ImageToolPage() {
           <CardHeader><CardTitle className="text-lg">Saída</CardTitle></CardHeader>
           <CardContent className="space-y-5">
             <label className="block text-sm">Formato
-              <select value={format} onChange={(event) => setFormat(event.target.value as OutputFormat)} className="mt-2 h-10 w-full rounded-md border border-border bg-background px-3">
+              <select value={format} onChange={(event) => setFormat(event.target.value as OutputImageType)} className="mt-2 h-10 w-full rounded-md border border-border bg-background px-3">
                 <option value="image/webp">WebP</option><option value="image/jpeg">JPEG</option><option value="image/png">PNG</option>
               </select>
             </label>

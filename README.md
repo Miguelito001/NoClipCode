@@ -8,10 +8,12 @@ Anteriormente conhecido como **EncodeHub**, o projeto passou por um rebranding c
 
 ## Funcionalidades
 
-O NoClipCode reúne **36 ferramentas** organizadas por categoria.
+O NoClipCode reúne **38 ferramentas** organizadas por categoria.
 
 ### Arquivos
 
+- **Processar Imagens em Lote** — Converta, comprima, redimensione e renomeie até 30 imagens localmente.
+- **Inspetor Local de Arquivos** — Identifique formatos reais, signatures, hashes e metadados sem upload.
 - **Gerar e Ler QR Code** — Gere QR Codes e leia códigos a partir de imagens, sem upload.
 - **Converter e Comprimir Imagem** — Converta PNG, JPEG e WebP, redimensione, comprima e remova metadados.
 - **Juntar PDFs** — Combine até 20 PDFs, reordene e baixe um único arquivo.

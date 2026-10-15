@@ -34,6 +34,8 @@ import {
   QrCode,
   ListFilter,
   FileJson2,
+  Images,
+  FileSearch,
 } from "lucide-react";
 
 export type ToolCategory =
@@ -60,6 +62,26 @@ export interface Tool {
 }
 
 export const tools: Tool[] = [
+  {
+    href: "/imagens-lote",
+    title: "Processar Imagens em Lote",
+    label: "Imagens em Lote",
+    description: "Converta, comprima, redimensione e renomeie até 30 imagens",
+    icon: Images,
+    color: "text-violet-400",
+    category: "Arquivos",
+    keywords: ["batch", "lote", "compress", "resize", "webp", "jpeg", "png"],
+  },
+  {
+    href: "/inspecionar-arquivo",
+    title: "Inspetor Local de Arquivos",
+    label: "Inspetor de Arquivo",
+    description: "Identifique formatos, signatures, hashes e metadados localmente",
+    icon: FileSearch,
+    color: "text-cyan-400",
+    category: "Arquivos",
+    keywords: ["magic bytes", "mime", "metadata", "sha256", "zip", "pdf", "arquivo"],
+  },
   {
     href: "/json-types",
     title: "JSON para TypeScript",
