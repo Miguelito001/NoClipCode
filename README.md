@@ -29,7 +29,7 @@ As ferramentas de arquivo processam tudo em memória no navegador. Os arquivos n
 - **JSON / XML / YAML** — Converta dados entre JSON, XML e YAML instantaneamente.
 - **JSON ⇄ CSV** — Converta entre arrays de objetos JSON e planilhas CSV nos dois sentidos.
 - **URL Encode / Decode** — Codifique e decodifique strings para uso seguro em URLs.
-- **Unidades de Medida** — Converta entre diferentes unidades de medida e moedas.
+- **Unidades de Medida** — Converta comprimento, massa, temperatura, área e volume.
 - **Unix Timestamp** — Converta timestamps Unix (segundos ou ms) em datas legíveis e vice-versa.
 
 ### Texto

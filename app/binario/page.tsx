@@ -8,33 +8,26 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ShareButton } from "@/components/share-button";
 import { useUrlState } from "@/hooks/use-url-state";
 import { ArrowRight, ArrowLeft, Copy, Trash2, Check } from "lucide-react";
+import { binaryToText, textToBinary } from "@/lib/binary";
 
 export default function BinarioPage() {
   const [input, setInput] = useUrlState("q", "");
   const [output, setOutput] = useState("");
   const [copied, setCopied] = useState(false);
 
-  const textToBinary = () => {
+  const convertToBinary = () => {
     try {
-      const binary = input
-        .split("")
-        .map((char) => char.charCodeAt(0).toString(2).padStart(8, "0"))
-        .join(" ");
-      setOutput(binary);
-    } catch {
-      setOutput("Erro ao converter para binário");
+      setOutput(textToBinary(input));
+    } catch (error) {
+      setOutput(error instanceof Error ? error.message : "Erro ao converter para binário.");
     }
   };
 
-  const binaryToText = () => {
+  const convertToText = () => {
     try {
-      const text = input
-        .split(" ")
-        .map((bin) => String.fromCharCode(parseInt(bin, 2)))
-        .join("");
-      setOutput(text);
-    } catch {
-      setOutput("Erro ao converter de binário - verifique o formato");
+      setOutput(binaryToText(input));
+    } catch (error) {
+      setOutput(error instanceof Error ? error.message : "Erro ao converter de binário.");
     }
   };
 
@@ -117,11 +110,11 @@ export default function BinarioPage() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-4 mt-6">
-            <Button onClick={textToBinary} className="gap-2">
+            <Button onClick={convertToBinary} className="gap-2">
               Texto para Binário
               <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button onClick={binaryToText} variant="outline" className="gap-2">
+            <Button onClick={convertToText} variant="outline" className="gap-2">
               <ArrowLeft className="h-4 w-4" />
               Binário para Texto
             </Button>

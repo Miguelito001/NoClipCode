@@ -5,6 +5,7 @@ import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Calculator, Clock } from "lucide-react";
+import { calculateCompletionDate, calculateWorkedTime } from "@/lib/time-tools";
 
 export default function TempoPage() {
   // Calculadora de data final
@@ -20,64 +21,24 @@ export default function TempoPage() {
   const [workloadResult, setWorkloadResult] = useState<string | null>(null);
 
   const calculateEndDate = () => {
-    if (!startDate || !hoursToAdd || !hoursPerDay) {
-      setEndDateResult("Preencha todos os campos");
-      return;
+    try {
+      const result = calculateCompletionDate(startDate, Number(hoursToAdd), Number(hoursPerDay));
+      const date = result.date.toLocaleDateString("pt-BR", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+      setEndDateResult(`Conclusão: ${date}, após ${result.hoursIntoDay.toLocaleString("pt-BR")}h da jornada (${result.businessDays} dia(s) útil(eis) envolvidos).`);
+    } catch (error) {
+      setEndDateResult(error instanceof Error ? error.message : "Não foi possível calcular.");
     }
-
-    const hours = parseFloat(hoursToAdd);
-    const hpd = parseFloat(hoursPerDay);
-    const daysNeeded = Math.ceil(hours / hpd);
-
-    const start = new Date(startDate);
-    let workDays = 0;
-    const current = new Date(start);
-
-    while (workDays < daysNeeded) {
-      current.setDate(current.getDate() + 1);
-      const dayOfWeek = current.getDay();
-      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-        workDays++;
-      }
-    }
-
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-
-    setEndDateResult(
-      `Data de conclusão: ${current.toLocaleDateString("pt-BR", options)} (${daysNeeded} dias úteis)`
-    );
   };
 
   const calculateWorkload = () => {
-    if (!entryTime || !exitTime) {
-      setWorkloadResult("Preencha os horários de entrada e saída");
-      return;
+    try {
+      const result = calculateWorkedTime(entryTime, exitTime, Number(lunchDuration));
+      const hours = Math.floor(result.netMinutes / 60);
+      const minutes = result.netMinutes % 60;
+      setWorkloadResult(`Carga horária: ${hours}h ${minutes.toString().padStart(2, "0")}min (${result.decimalHours.toFixed(2)} horas)${result.overnight ? " — turno atravessa a meia-noite" : ""}.`);
+    } catch (error) {
+      setWorkloadResult(error instanceof Error ? error.message : "Não foi possível calcular.");
     }
-
-    const [entryH, entryM] = entryTime.split(":").map(Number);
-    const [exitH, exitM] = exitTime.split(":").map(Number);
-    const lunch = parseInt(lunchDuration) || 0;
-
-    const entryMinutes = entryH * 60 + entryM;
-    const exitMinutes = exitH * 60 + exitM;
-
-    let totalMinutes = exitMinutes - entryMinutes - lunch;
-
-    if (totalMinutes < 0) {
-      totalMinutes += 24 * 60;
-    }
-
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-
-    setWorkloadResult(
-      `Carga horária: ${hours}h ${minutes.toString().padStart(2, "0")}min (${(totalMinutes / 60).toFixed(2)} horas)`
-    );
   };
 
   return (
@@ -106,7 +67,7 @@ export default function TempoPage() {
                   <div>
                     <CardTitle className="text-lg">Data de Conclusão</CardTitle>
                     <CardDescription>
-                      Calcule quando um projeto será concluído
+                      O trabalho começa no início da jornada da data informada; sábados e domingos são pulados
                     </CardDescription>
                   </div>
                 </div>

@@ -366,7 +366,7 @@ export const tools: Tool[] = [
     href: "/unidades",
     title: "Unidades de Medida",
     label: "Unidades",
-    description: "Converta entre diferentes unidades de medida e moedas",
+    description: "Converta comprimento, massa, temperatura, área e volume",
     icon: Ruler,
     color: "text-pink-400",
     category: "Conversão",

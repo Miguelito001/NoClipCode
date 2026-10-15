@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "@/components/header";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { ShareButton } from "@/components/share-button";
 import { useUrlState } from "@/hooks/use-url-state";
 import { Copy, Check, Regex } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { isPotentiallyCatastrophic, REGEX_LIMITS, validateRegexInput } from "@/lib/regex-safety";
 
 const FLAGS = [
   { flag: "g", label: "g", title: "Global — encontra todas as ocorrências" },
@@ -64,6 +65,7 @@ export default function RegexPage() {
     "Contato: joao@email.com ou maria@empresa.com.br\nCPF: 123.456.789-00\nSite: https://www.exemplo.com.br"
   );
   const [copiedGroup, setCopiedGroup] = useState<string | null>(null);
+  const [result, setResult] = useState<{ matches: Match[]; error: string; running: boolean }>({ matches: [], error: "", running: false });
 
   const toggleFlag = (f: string) => {
     setActiveFlags((prev) => {
@@ -74,30 +76,26 @@ export default function RegexPage() {
     });
   };
 
-  const { matches, error } = useMemo<{ matches: Match[]; error: string }>(() => {
-    if (!pattern) return { matches: [], error: "" };
-    try {
-      const flags = Array.from(activeFlags).join("");
-      const re = new RegExp(pattern, flags.includes("g") ? flags : flags + "g");
-      const found: Match[] = [];
-      let m: RegExpExecArray | null;
-      let safetyCounter = 0;
-      while ((m = re.exec(testText)) !== null && safetyCounter < 500) {
-        found.push({
-          index: m.index,
-          end: m.index + m[0].length,
-          value: m[0],
-          groups: m.slice(1),
-        });
-        if (!flags.includes("g")) break;
-        if (m[0].length === 0) re.lastIndex++;
-        safetyCounter++;
-      }
-      return { matches: found, error: "" };
-    } catch (e) {
-      return { matches: [], error: (e as Error).message };
-    }
+  useEffect(() => {
+    if (!pattern) { setResult({ matches: [], error: "", running: false }); return; }
+    const validation = validateRegexInput(pattern, testText);
+    if (validation) { setResult({ matches: [], error: validation, running: false }); return; }
+    if (isPotentiallyCatastrophic(pattern)) { setResult({ matches: [], error: "Padrão recusado: quantificadores aninhados podem causar processamento excessivo.", running: false }); return; }
+    setResult((previous) => ({ ...previous, error: "", running: true }));
+    const worker = new Worker(new URL("./regex.worker.ts", import.meta.url));
+    const timeout = window.setTimeout(() => {
+      worker.terminate();
+      setResult({ matches: [], error: `Execução interrompida após ${REGEX_LIMITS.timeoutMs} ms para proteger a página.`, running: false });
+    }, REGEX_LIMITS.timeoutMs);
+    worker.onmessage = (event: MessageEvent<{ matches: Match[]; error: string }>) => {
+      window.clearTimeout(timeout); worker.terminate(); setResult({ ...event.data, running: false });
+    };
+    worker.onerror = () => { window.clearTimeout(timeout); worker.terminate(); setResult({ matches: [], error: "Não foi possível executar a expressão.", running: false }); };
+    worker.postMessage({ pattern, flags: Array.from(activeFlags).join(""), text: testText });
+    return () => { window.clearTimeout(timeout); worker.terminate(); };
   }, [pattern, activeFlags, testText]);
+
+  const { matches, error, running } = result;
 
   const copyMatch = async (value: string, key: string) => {
     await navigator.clipboard.writeText(value);
@@ -151,6 +149,7 @@ export default function RegexPage() {
                     </span>
                   </div>
                   {error && <p className="text-destructive text-xs mt-1.5 font-mono">{error}</p>}
+                  {running && <p className="text-muted-foreground text-xs mt-1.5">Executando em ambiente isolado…</p>}
                 </div>
 
                 <div>
@@ -201,6 +200,7 @@ export default function RegexPage() {
                 <Textarea
                   value={testText}
                   onChange={(e) => setTestText(e.target.value)}
+                  maxLength={REGEX_LIMITS.text}
                   className="min-h-[280px] font-mono text-sm"
                   placeholder="Cole o texto que deseja testar..."
                 />

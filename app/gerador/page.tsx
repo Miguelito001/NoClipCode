@@ -6,26 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Copy, Check, RefreshCw, Shuffle, KeyRound, Palette, Fingerprint } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { generateSecurePassword, generateSecureUUID } from "@/lib/secure-random";
 
 // ─── UUID v4 ─────────────────────────────────────────────
-function generateUUID(): string {
-  if (typeof crypto !== "undefined" && crypto.randomUUID) {
-    return crypto.randomUUID();
-  }
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0;
-    return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
-  });
-}
+const generateUUID = generateSecureUUID;
 
 // ─── Password ─────────────────────────────────────────────
-const CHARS = {
-  upper: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  lower: "abcdefghijklmnopqrstuvwxyz",
-  numbers: "0123456789",
-  symbols: "!@#$%^&*()-_=+[]{}|;:,.<>?",
-};
-
 function generatePassword(opts: {
   length: number;
   upper: boolean;
@@ -33,17 +19,13 @@ function generatePassword(opts: {
   numbers: boolean;
   symbols: boolean;
 }): string {
-  let pool = "";
-  if (opts.upper) pool += CHARS.upper;
-  if (opts.lower) pool += CHARS.lower;
-  if (opts.numbers) pool += CHARS.numbers;
-  if (opts.symbols) pool += CHARS.symbols;
-  if (!pool) pool = CHARS.lower;
-
-  return Array.from(
-    { length: opts.length },
-    () => pool[Math.floor(Math.random() * pool.length)]
-  ).join("");
+  const sets = [
+    opts.upper && "uppercase",
+    opts.lower && "lowercase",
+    opts.numbers && "numbers",
+    opts.symbols && "symbols",
+  ].filter(Boolean) as Array<"uppercase" | "lowercase" | "numbers" | "symbols">;
+  return generateSecurePassword(opts.length, sets);
 }
 
 // ─── Color ────────────────────────────────────────────────
@@ -117,7 +99,11 @@ export default function GeradorPage() {
 
   const togglePwOpt = (key: keyof typeof pwOpts) => {
     if (typeof pwOpts[key] === "boolean") {
-      setPwOpts((p) => ({ ...p, [key]: !p[key] }));
+      setPwOpts((p) => {
+        const active = [p.upper, p.lower, p.numbers, p.symbols].filter(Boolean).length;
+        if (p[key] && active === 1) return p;
+        return { ...p, [key]: !p[key] };
+      });
     }
   };
 

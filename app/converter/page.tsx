@@ -9,8 +9,9 @@ import { ShareButton } from "@/components/share-button";
 import { useUrlState } from "@/hooks/use-url-state";
 import { Copy, Check, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { convertStructuredData, type DataFormat } from "@/lib/data-converter";
 
-type Format = "json" | "xml" | "yaml";
+type Format = DataFormat;
 
 export default function ConverterPage() {
   const [input, setInput] = useUrlState("q", "");
@@ -19,6 +20,7 @@ export default function ConverterPage() {
   const [outputFormat, setOutputFormat] = useState<Format>("yaml");
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState("");
+  const [converting, setConverting] = useState(false);
 
   const formats: { value: Format; label: string }[] = [
     { value: "json", label: "JSON" },
@@ -26,141 +28,16 @@ export default function ConverterPage() {
     { value: "yaml", label: "YAML" },
   ];
 
-  const parseJSON = (str: string) => JSON.parse(str);
-
-  const parseYAML = (str: string) => {
-    const lines = str.split("\n");
-    const result: Record<string, unknown> = {};
-    let currentKey = "";
-
-    for (const line of lines) {
-      if (line.trim() === "" || line.startsWith("#")) continue;
-
-      const match = line.match(/^(\s*)([^:]+):\s*(.*)$/);
-      if (match) {
-        const [, , key, value] = match;
-        currentKey = key.trim();
-        if (value.trim()) {
-          let parsedValue: unknown = value.trim();
-          if (parsedValue === "true") parsedValue = true;
-          else if (parsedValue === "false") parsedValue = false;
-          else if (!isNaN(Number(parsedValue))) parsedValue = Number(parsedValue);
-          else if (typeof parsedValue === "string" && (parsedValue.startsWith('"') || parsedValue.startsWith("'"))) {
-            parsedValue = parsedValue.slice(1, -1);
-          }
-          result[currentKey] = parsedValue;
-        }
-      }
-    }
-    return result;
-  };
-
-  const parseXML = (str: string) => {
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(str, "text/xml");
-
-    const parseNode = (node: Element): unknown => {
-      const obj: Record<string, unknown> = {};
-
-      if (node.children.length === 0) {
-        return node.textContent?.trim() || "";
-      }
-
-      for (const child of Array.from(node.children)) {
-        const key = child.tagName;
-        const value = parseNode(child);
-
-        if (obj[key]) {
-          if (!Array.isArray(obj[key])) {
-            obj[key] = [obj[key]];
-          }
-          (obj[key] as unknown[]).push(value);
-        } else {
-          obj[key] = value;
-        }
-      }
-
-      return obj;
-    };
-
-    return parseNode(xmlDoc.documentElement);
-  };
-
-  const toJSON = (obj: unknown) => JSON.stringify(obj, null, 2);
-
-  const toYAML = (obj: unknown, indent = 0): string => {
-    const spaces = "  ".repeat(indent);
-
-    if (Array.isArray(obj)) {
-      return obj.map((item) => `${spaces}- ${toYAML(item, indent + 1).trim()}`).join("\n");
-    }
-
-    if (typeof obj === "object" && obj !== null) {
-      return Object.entries(obj)
-        .map(([key, value]) => {
-          if (typeof value === "object" && value !== null) {
-            return `${spaces}${key}:\n${toYAML(value, indent + 1)}`;
-          }
-          return `${spaces}${key}: ${value}`;
-        })
-        .join("\n");
-    }
-
-    return String(obj);
-  };
-
-  const toXML = (obj: unknown, rootName = "root", indent = 0): string => {
-    const spaces = "  ".repeat(indent);
-
-    if (Array.isArray(obj)) {
-      return obj.map((item) => toXML(item, "item", indent)).join("\n");
-    }
-
-    if (typeof obj === "object" && obj !== null) {
-      const inner = Object.entries(obj)
-        .map(([key, value]) => toXML(value, key, indent + 1))
-        .join("\n");
-      return `${spaces}<${rootName}>\n${inner}\n${spaces}</${rootName}>`;
-    }
-
-    return `${spaces}<${rootName}>${obj}</${rootName}>`;
-  };
-
-  const convert = () => {
+  const convert = async () => {
     setError("");
+    setConverting(true);
     try {
-      let data: unknown;
-
-      switch (inputFormat) {
-        case "json":
-          data = parseJSON(input);
-          break;
-        case "yaml":
-          data = parseYAML(input);
-          break;
-        case "xml":
-          data = parseXML(input);
-          break;
-      }
-
-      let result: string;
-
-      switch (outputFormat) {
-        case "json":
-          result = toJSON(data);
-          break;
-        case "yaml":
-          result = toYAML(data);
-          break;
-        case "xml":
-          result = toXML(data);
-          break;
-      }
-
-      setOutput(result);
+      setOutput(await convertStructuredData(input, inputFormat, outputFormat));
     } catch (e) {
       setError(`Erro ao converter: ${e instanceof Error ? e.message : "formato inválido"}`);
       setOutput("");
+    } finally {
+      setConverting(false);
     }
   };
 
@@ -269,8 +146,8 @@ export default function ConverterPage() {
           </div>
 
           <div className="flex justify-center mt-6">
-            <Button onClick={convert} className="gap-2">
-              Converter
+            <Button onClick={convert} disabled={converting} className="gap-2">
+              {converting ? "Convertendo..." : "Converter"}
               <ArrowRight className="h-4 w-4" />
             </Button>
           </div>

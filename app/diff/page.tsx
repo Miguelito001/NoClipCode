@@ -6,48 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GitCompare, Trash2 } from "lucide-react";
-
-type DiffPart =
-  | { type: "equal"; value: string }
-  | { type: "added"; value: string }
-  | { type: "removed"; value: string };
-
-function computeLineDiff(a: string, b: string): DiffPart[] {
-  const linesA = a.split("\n");
-  const linesB = b.split("\n");
-  const result: DiffPart[] = [];
-
-  const m = linesA.length;
-  const n = linesB.length;
-  const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
-
-  for (let i = m - 1; i >= 0; i--) {
-    for (let j = n - 1; j >= 0; j--) {
-      if (linesA[i] === linesB[j]) {
-        dp[i][j] = dp[i + 1][j + 1] + 1;
-      } else {
-        dp[i][j] = Math.max(dp[i + 1][j], dp[i][j + 1]);
-      }
-    }
-  }
-
-  let i = 0, j = 0;
-  while (i < m || j < n) {
-    if (i < m && j < n && linesA[i] === linesB[j]) {
-      result.push({ type: "equal", value: linesA[i] });
-      i++;
-      j++;
-    } else if (j < n && (i >= m || dp[i + 1][j] >= dp[i][j + 1])) {
-      result.push({ type: "added", value: linesB[j] });
-      j++;
-    } else {
-      result.push({ type: "removed", value: linesA[i] });
-      i++;
-    }
-  }
-
-  return result;
-}
+import { computeLineDiff, validateDiffInput } from "@/lib/diff-tools";
 
 export default function DiffPage() {
   const [textA, setTextA] = useState("");
@@ -56,13 +15,14 @@ export default function DiffPage() {
 
   const diff = useMemo(() => {
     if (!showDiff) return [];
-    return computeLineDiff(textA, textB);
+    try { return computeLineDiff(textA, textB); } catch { return []; }
   }, [textA, textB, showDiff]);
+  const error = showDiff ? validateDiffInput(textA, textB) : null;
 
   const stats = useMemo(() => {
-    const added = diff.filter((d) => d.type === "added").length;
-    const removed = diff.filter((d) => d.type === "removed").length;
-    const equal = diff.filter((d) => d.type === "equal").length;
+    const added = diff.filter((d) => d.type === "add").length;
+    const removed = diff.filter((d) => d.type === "remove").length;
+    const equal = diff.filter((d) => d.type === "same").length;
     return { added, removed, equal };
   }, [diff]);
 
@@ -163,6 +123,7 @@ export default function DiffPage() {
                 </div>
               </CardHeader>
               <CardContent>
+                {error && <p className="mb-4 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">{error}</p>}
                 <div className="rounded-lg border border-border overflow-auto max-h-[500px]">
                   {diff.length === 0 ? (
                     <p className="p-4 text-muted-foreground text-sm">Os textos são idênticos.</p>
@@ -173,26 +134,26 @@ export default function DiffPage() {
                           <tr
                             key={idx}
                             className={
-                              part.type === "added"
+                              part.type === "add"
                                 ? "bg-primary/10"
-                                : part.type === "removed"
+                                : part.type === "remove"
                                 ? "bg-destructive/10"
                                 : ""
                             }
                           >
                             <td className="w-8 px-3 py-0.5 text-muted-foreground text-xs select-none border-r border-border text-right">
-                              {part.type === "added" ? "+" : part.type === "removed" ? "-" : " "}
+                              {part.type === "add" ? "+" : part.type === "remove" ? "-" : " "}
                             </td>
                             <td
                               className={`px-4 py-0.5 whitespace-pre-wrap break-all ${
-                                part.type === "added"
+                                part.type === "add"
                                   ? "text-primary"
-                                  : part.type === "removed"
+                                  : part.type === "remove"
                                   ? "text-destructive"
                                   : "text-foreground"
                               }`}
                             >
-                              {part.value || " "}
+                              {part.content || " "}
                             </td>
                           </tr>
                         ))}
