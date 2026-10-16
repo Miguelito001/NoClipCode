@@ -1,0 +1,2 @@
+import { LockKeyhole } from "lucide-react";
+export function LocalProcessingBadge({ compact=false }:{compact?:boolean}){return <p title="Seus arquivos e dados são processados inteiramente neste navegador e não são enviados para servidores." className="inline-flex items-center gap-2 text-xs text-emerald-400"><LockKeyhole className="h-3.5 w-3.5"/>{compact?"Seus dados permanecem neste dispositivo":"Processamento local. Seus arquivos e dados não são enviados para servidores."}</p>}

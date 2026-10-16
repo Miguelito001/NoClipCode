@@ -8,13 +8,16 @@ Anteriormente conhecido como **EncodeHub**, o projeto passou por um rebranding c
 
 ## Funcionalidades
 
-O NoClipCode reúne **48 ferramentas** organizadas por categoria.
+O NoClipCode reúne **58 ferramentas** organizadas por categoria.
 
 ### Arquivos
 
 - **Processar Imagens em Lote** — Converta, comprima, redimensione e renomeie até 30 imagens localmente.
 - **Inspetor Local de Arquivos** — Identifique formatos reais, signatures, hashes e metadados sem upload.
-- **Gerar e Ler QR Code** — Gere QR Codes e leia códigos a partir de imagens, sem upload.
+- **Gerar e Ler QR Code** — Gere texto, Wi-Fi, vCard, telefone, SMS, e-mail, localização ou evento; personalize, exporte PNG/SVG e leia imagens sem upload.
+- **Recortar Imagem** — Recorte, reposicione, redimensione e gire imagens localmente.
+- **Marca-d'água em Imagem** — Aplique texto ou logotipo com posição e transparência configuráveis.
+- **Marca-d'água em PDF** — Marque páginas selecionadas de um PDF sem enviar o documento.
 - **Converter e Comprimir Imagem** — Converta PNG, JPEG e WebP, redimensione, comprima e remova metadados.
 - **Juntar PDFs** — Combine até 20 PDFs, reordene e baixe um único arquivo.
 - **Extrair e Girar PDF** — Selecione intervalos, remova páginas e aplique rotação.
@@ -24,6 +27,8 @@ O NoClipCode reúne **48 ferramentas** organizadas por categoria.
 - **Conversor HEIC / HEIF** — Converta fotos de iPhone para JPEG, PNG ou WebP.
 
 As ferramentas de arquivo processam tudo em memória no navegador. Os arquivos não são enviados ao servidor.
+
+Consulte também o [`PRIVACY_CONTRACT.md`](PRIVACY_CONTRACT.md), o contrato permanente de privacidade para ferramentas atuais e futuras.
 
 ### Conversão
 
@@ -38,6 +43,9 @@ As ferramentas de arquivo processam tudo em memória no navegador. Os arquivos n
 - **TOML ⇄ JSON / YAML** — Converta arquivos de configuração entre os três formatos.
 
 ### Texto
+
+- **Gerador de Slug** — Converta títulos em URLs limpas, inclusive em lote.
+- **Gerador de Tabela Markdown** — Edite células e alinhamentos e copie o Markdown pronto.
 
 - **Conversor de Case** — Converta entre camelCase, snake_case, kebab-case e mais.
 - **Analisador de Texto** — Conte caracteres, palavras, linhas, bytes e revele caracteres invisíveis.
@@ -62,6 +70,10 @@ As ferramentas de arquivo processam tudo em memória no navegador. Os arquivos n
 
 ### Frontend
 
+- **Gerador de Favicon** — Crie um kit para navegador e dispositivos por imagem, emoji ou texto.
+- **Extrator de Paleta** — Encontre as cores dominantes de uma imagem localmente.
+- **Gerador de Gradiente CSS** — Monte gradientes lineares e radiais visualmente.
+- **Gerador de Box Shadow** — Ajuste sombras CSS com pré-visualização.
 - **Entidades HTML** — Converta caracteres especiais em entidades HTML e vice-versa.
 - **PX ⇄ REM / EM** — Converta px para rem/em com base no font-size definido.
 - **Conversor de Cor** — Converta entre HEX, RGB, HSL e CMYK com pré-visualização.
@@ -82,6 +94,7 @@ As ferramentas de arquivo processam tudo em memória no navegador. Os arquivos n
 
 ### Utilitário
 
+- **Calculadora de Proporção** — Simplifique aspect ratios e redimensione sem distorção.
 - **Calculadora de Tempo** — Calcule horas de trabalho, datas e carga horária.
 
 ## Command Palette
