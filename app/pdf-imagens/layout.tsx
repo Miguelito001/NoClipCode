@@ -1,0 +1,1 @@
+import type { Metadata } from "next"; export const metadata:Metadata={title:"PDF para Imagens | NoClipCode",description:"Converta páginas PDF em PNG ou JPEG localmente."}; export default function Layout({children}:{children:React.ReactNode}){return children}

@@ -1,0 +1,1 @@
+import type { Metadata } from "next"; export const metadata:Metadata={title:"JSONPath Tester | NoClipCode",description:"Consulte JSON com expressões JSONPath localmente."}; export default function Layout({children}:{children:React.ReactNode}){return children}

@@ -8,7 +8,7 @@ Anteriormente conhecido como **EncodeHub**, o projeto passou por um rebranding c
 
 ## Funcionalidades
 
-O NoClipCode reúne **38 ferramentas** organizadas por categoria.
+O NoClipCode reúne **48 ferramentas** organizadas por categoria.
 
 ### Arquivos
 
@@ -18,6 +18,10 @@ O NoClipCode reúne **38 ferramentas** organizadas por categoria.
 - **Converter e Comprimir Imagem** — Converta PNG, JPEG e WebP, redimensione, comprima e remova metadados.
 - **Juntar PDFs** — Combine até 20 PDFs, reordene e baixe um único arquivo.
 - **Extrair e Girar PDF** — Selecione intervalos, remova páginas e aplique rotação.
+- **Removedor de Metadados PDF** — Veja e remova metadados documentais detectáveis.
+- **Imagens → PDF** — Combine PNG, JPEG e WebP com ordem, página e margens configuráveis.
+- **PDF → Imagens** — Renderize páginas em PNG ou JPEG e baixe um ZIP.
+- **Conversor HEIC / HEIF** — Converta fotos de iPhone para JPEG, PNG ou WebP.
 
 As ferramentas de arquivo processam tudo em memória no navegador. Os arquivos não são enviados ao servidor.
 
@@ -31,6 +35,7 @@ As ferramentas de arquivo processam tudo em memória no navegador. Os arquivos n
 - **URL Encode / Decode** — Codifique e decodifique strings para uso seguro em URLs.
 - **Unidades de Medida** — Converta comprimento, massa, temperatura, área e volume.
 - **Unix Timestamp** — Converta timestamps Unix (segundos ou ms) em datas legíveis e vice-versa.
+- **TOML ⇄ JSON / YAML** — Converta arquivos de configuração entre os três formatos.
 
 ### Texto
 
@@ -51,12 +56,17 @@ As ferramentas de arquivo processam tudo em memória no navegador. Os arquivos n
 - **Gerador** — Gere UUIDs, senhas seguras e cores aleatórias instantaneamente.
 - **Gerador de Mock Data** — Defina campos e gere dados falsos em JSON ou CSV para testes.
 - **JSON para TypeScript** — Gere interfaces TypeScript a partir de respostas JSON.
+- **JSONPath Tester** — Consulte arrays e objetos com expressões JSONPath.
+- **JSON Repair** — Recupere JSON com erros comuns sem usar `eval`.
+- **Mermaid Viewer** — Visualize e exporte diagramas Mermaid com configuração segura.
 
 ### Frontend
 
 - **Entidades HTML** — Converta caracteres especiais em entidades HTML e vice-versa.
 - **PX ⇄ REM / EM** — Converta px para rem/em com base no font-size definido.
 - **Conversor de Cor** — Converta entre HEX, RGB, HSL e CMYK com pré-visualização.
+- **Otimizador e Inspetor SVG** — Sanitize, inspecione e otimize SVG localmente.
+- **Verificador de Contraste WCAG** — Confira contraste AA e AAA entre duas cores.
 
 ### Rede
 

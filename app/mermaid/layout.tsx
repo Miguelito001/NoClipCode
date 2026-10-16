@@ -1,0 +1,1 @@
+import type { Metadata } from "next"; export const metadata:Metadata={title:"Mermaid Viewer | NoClipCode",description:"Visualize e exporte diagramas Mermaid com segurança."}; export default function Layout({children}:{children:React.ReactNode}){return children}

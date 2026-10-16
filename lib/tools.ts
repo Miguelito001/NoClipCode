@@ -62,6 +62,16 @@ export interface Tool {
 }
 
 export const tools: Tool[] = [
+  { href: "/jsonpath", title: "JSONPath Tester", label: "JSONPath", description: "Consulte arrays e objetos JSON com expressões JSONPath", icon: FileJson2, color: "text-amber-400", category: "Dev", keywords: ["jsonpath", "query", "consulta", "json"] },
+  { href: "/json-repair", title: "JSON Repair", label: "Reparar JSON", description: "Recupere JSON com erros comuns de sintaxe", icon: Braces, color: "text-orange-400", category: "Dev", keywords: ["json", "repair", "corrigir", "broken"] },
+  { href: "/toml", title: "TOML ⇄ JSON / YAML", label: "TOML", description: "Converta configurações entre TOML, JSON e YAML", icon: ArrowLeftRight, color: "text-yellow-400", category: "Conversão", keywords: ["toml", "yaml", "json", "config"] },
+  { href: "/svg", title: "Otimizador e Inspetor SVG", label: "SVG", description: "Sanitize, inspecione e otimize arquivos SVG", icon: Code2, color: "text-lime-400", category: "Frontend", keywords: ["svg", "svgo", "vetor", "otimizar"] },
+  { href: "/pdf-metadata", title: "Removedor de Metadados PDF", label: "Metadata PDF", description: "Veja e remova metadados documentais de PDFs", icon: FileSearch, color: "text-red-400", category: "Arquivos", keywords: ["pdf", "metadata", "autor", "privacidade"] },
+  { href: "/imagens-pdf", title: "Imagens para PDF", label: "Imagens → PDF", description: "Combine PNG, JPEG e WebP em um PDF", icon: Images, color: "text-rose-400", category: "Arquivos", keywords: ["images", "pdf", "jpg", "png"] },
+  { href: "/pdf-imagens", title: "PDF para Imagens", label: "PDF → Imagens", description: "Renderize páginas PDF como PNG ou JPEG", icon: FileStack, color: "text-orange-400", category: "Arquivos", keywords: ["pdf", "image", "png", "jpeg", "zip"] },
+  { href: "/heic", title: "Conversor HEIC / HEIF", label: "HEIC / HEIF", description: "Converta fotos de iPhone para JPEG, PNG ou WebP", icon: ImageDown, color: "text-fuchsia-400", category: "Arquivos", keywords: ["heic", "heif", "iphone", "foto", "webp"] },
+  { href: "/contraste", title: "Verificador de Contraste WCAG", label: "Contraste WCAG", description: "Valide contraste AA e AAA entre duas cores", icon: Palette, color: "text-cyan-400", category: "Frontend", keywords: ["wcag", "contrast", "accessibility", "a11y"] },
+  { href: "/mermaid", title: "Mermaid Viewer", label: "Mermaid", description: "Visualize e exporte diagramas Mermaid com segurança", icon: GitCompare, color: "text-violet-400", category: "Dev", keywords: ["mermaid", "diagram", "flowchart", "graph"] },
   {
     href: "/imagens-lote",
     title: "Processar Imagens em Lote",

@@ -1,0 +1,1 @@
+import type { Metadata } from "next"; export const metadata:Metadata={title:"Contraste WCAG | NoClipCode",description:"Verifique contraste AA e AAA entre cores."}; export default function Layout({children}:{children:React.ReactNode}){return children}

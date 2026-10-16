@@ -1,0 +1,1 @@
+import type { Metadata } from "next"; export const metadata:Metadata={title:"Remover Metadados PDF | NoClipCode",description:"Veja e remova metadados documentais de PDF."}; export default function Layout({children}:{children:React.ReactNode}){return children}

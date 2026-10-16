@@ -1,0 +1,1 @@
+import type { Metadata } from "next"; export const metadata:Metadata={title:"TOML, JSON e YAML | NoClipCode",description:"Converta TOML, JSON e YAML no navegador."}; export default function Layout({children}:{children:React.ReactNode}){return children}

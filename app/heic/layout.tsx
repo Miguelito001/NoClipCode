@@ -1,0 +1,1 @@
+import type { Metadata } from "next"; export const metadata:Metadata={title:"Conversor HEIC e HEIF | NoClipCode",description:"Converta HEIC e HEIF para JPEG, PNG ou WebP."}; export default function Layout({children}:{children:React.ReactNode}){return children}

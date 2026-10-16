@@ -1,0 +1,1 @@
+import type { Metadata } from "next"; export const metadata:Metadata={title:"JSON Repair | NoClipCode",description:"Repare erros comuns em documentos JSON localmente."}; export default function Layout({children}:{children:React.ReactNode}){return children}

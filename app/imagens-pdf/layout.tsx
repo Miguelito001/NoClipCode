@@ -1,0 +1,1 @@
+import type { Metadata } from "next"; export const metadata:Metadata={title:"Imagens para PDF | NoClipCode",description:"Combine imagens em um PDF no navegador."}; export default function Layout({children}:{children:React.ReactNode}){return children}

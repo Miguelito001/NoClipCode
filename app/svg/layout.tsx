@@ -1,0 +1,1 @@
+import type { Metadata } from "next"; export const metadata:Metadata={title:"Otimizador SVG | NoClipCode",description:"Inspecione, sanitize e otimize SVG localmente."}; export default function Layout({children}:{children:React.ReactNode}){return children}
