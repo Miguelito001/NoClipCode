@@ -45,9 +45,28 @@ export default function QrCodePage() {
       bitmap.close();
       const image = context.getImageData(0, 0, canvas.width, canvas.height);
       const jsQR = (await import("jsqr")).default;
-      const result = jsQR(image.data, image.width, image.height, { inversionAttempts: "attemptBoth" });
-      if (!result) throw new Error("Nenhum QR Code legível foi encontrado na imagem.");
-      setDecoded(result.data);
+      const quickResult = jsQR(image.data, image.width, image.height, { inversionAttempts: "attemptBoth" });
+      if (quickResult) {
+        setDecoded(quickResult.data);
+        return;
+      }
+
+      // Photos of screens often contain perspective distortion, moiré and a QR
+      // code that occupies only a small part of the frame. ZXing-C++'s robust
+      // detector is loaded only for this harder path, keeping the common path
+      // fast while preserving fully local processing.
+      const { readBarcodes } = await import("zxing-wasm/reader");
+      const [robustResult] = await readBarcodes(file, {
+        formats: ["QRCode"],
+        maxNumberOfSymbols: 1,
+        tryHarder: true,
+        tryRotate: true,
+        tryInvert: true,
+        tryDownscale: true,
+        tryDenoise: true,
+      });
+      if (!robustResult?.text) throw new Error("Nenhum QR Code legível foi encontrado na imagem.");
+      setDecoded(robustResult.text);
     } catch (cause) { setError(cause instanceof Error && cause.message ? cause.message : "Não foi possível ler esta imagem."); }
     finally { setBusy(false); }
   }
